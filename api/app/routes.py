@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import jsonify, request, redirect, url_for
 from datetime import datetime
 import pytz
 import sys
@@ -15,8 +15,8 @@ def home():
 
 @app.route('/explore')
 def explore():
-    trails = Trail.query.all()
-    return trails
+    trails = [trail.to_dict() for trail in Trail.query.all()]
+    return jsonify(trails)
 
 # TODO: Need to re-factor this route to work with the React app
 @app.route('/plan', methods=['GET', 'POST'])
