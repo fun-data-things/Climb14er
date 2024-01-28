@@ -30,6 +30,7 @@ for trail in trails_dev_data:
             difficulty_rating = trail['difficulty_rating'],
             miles = trail['miles'],
             elevation_gain = trail['elevation_gain'],
+            description = trail['description'],
             latitude = trail['latitude'],
             longitude = trail['longitude']
         )
