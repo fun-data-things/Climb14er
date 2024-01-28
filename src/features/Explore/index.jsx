@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Card from '../../components/Card';
+import { TrailCard } from '../../components/Cards';
 import * as S from './style';
 
 const Explore = () => {
@@ -14,7 +14,7 @@ const Explore = () => {
     return (
       <div style={S.ExploreContainer}>
         {trails.map((trail) => (
-          <Card
+          <TrailCard
             key={trail.id}
             name={trail.name} 
             description={trail.description} 

@@ -7,6 +7,7 @@ from app import app, APP_ROOT
 from app.database import db
 from app.models.explore import Trail
 from app.models.plan import Plan, Forecast
+from app.utils import form_tz_aware_timestamp
 
 
 @app.route('/')
@@ -22,30 +23,23 @@ def explore():
 @app.route('/plan', methods=['GET', 'POST'])
 def plan():
     if request.method == 'POST':
-        data = request.form
+        data = request.json
         
         # Query Trail object properties for selected route
-        trail = Trail.query.filter_by(name=data['trailname']).first()
+        trail = Trail.query.filter_by(name=data['trail']).first()
 
         # Get timestamp for weather data
-        start_date = datetime.strptime(data['date'], '%Y-%m-%d').date()
-        start_time = datetime.strptime(data['start-time'], '%H:%M').time()
-        naive_timestamp = datetime.combine(start_date, start_time)
-        timezone = pytz.timezone('America/Denver')
-        aware_timestamp = timezone.localize(naive_timestamp)
-
-        start_at_rounded = aware_timestamp.replace(minute=0, second=0, microsecond=0)
-
+        start_at = form_tz_aware_timestamp(data['date'], data['time'], 'America/Denver')
         
         # Fetch weather forecast
-        forecast_id = Forecast.get_forecast(trail.latitude, trail.longitude, start_at_rounded)
+        forecast_id = Forecast.get_forecast(trail.latitude, trail.longitude, start_at)
 
         # Confirm record created
         print(f"forecast_id = {forecast_id}", file=sys.stderr)
 
         plan = Plan(
             created_at = datetime.now(),
-            start_at = aware_timestamp,
+            start_at = start_at,
             trail_id = trail.id,
             forecast_id = forecast_id
         )
@@ -53,11 +47,22 @@ def plan():
         db.session.add(plan)
         db.session.commit()
 
-        return redirect(url_for('plan_detail', id=plan.id))
+        plan_id = str(plan.id)
 
-    return 
+        return plan_id
+    
+    # GET trail names for dropdown selection
+    trail_names = [trail.name for trail in Trail.query.all()]
+
+    return jsonify(trail_names)
+
 
 @app.route('/plan/<int:id>', methods=['GET']) 
 def plan_detail(id):
     plan = db.get_or_404(Plan, id)
-    return plan
+    trail = db.get_or_404(Trail, plan.trail_id)
+    forecast = db.get_or_404(Forecast, plan.forecast_id)
+
+    response = {"plan": plan.to_dict(), "trail": trail.to_dict(), "forecast": forecast.to_dict()}
+    print(response, file=sys.stderr)
+    return response

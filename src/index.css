@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+button:disabled,
+button[disabled] {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+}
