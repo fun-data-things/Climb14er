@@ -64,5 +64,5 @@ def plan_detail(id):
     forecast = db.get_or_404(Forecast, plan.forecast_id)
 
     response = {"plan": plan.to_dict(), "trail": trail.to_dict(), "forecast": forecast.to_dict()}
-    print(response, file=sys.stderr)
+    
     return response
