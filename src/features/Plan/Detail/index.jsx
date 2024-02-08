@@ -21,7 +21,7 @@ const PlanDetail = () => {
     }, [planId])
 
     return (
-        <div>
+        <div style={S.PlanContainer}>
             <div>
                 { planId && plan?.plan ? (
                     <TrailCard

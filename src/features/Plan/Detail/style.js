@@ -1,5 +1,12 @@
+const PlanContainer = {
+    padding: '12px',
+    textAlign: 'center',
+    display: 'inline-block'
+};
+
 const TrailContainer = {
     display: 'flex',
+    float: 'left',
     justifyContent: 'space-between',
     padding: '48px',
     flexWrap: 'wrap',
@@ -8,6 +15,7 @@ const TrailContainer = {
 
 const WeatherContainer = {
     display: 'flex',
+    float: 'left',
     justifyContent: 'space-between',
     padding: '48px',
     flexWrap: 'wrap',
@@ -15,6 +23,7 @@ const WeatherContainer = {
 }
 
 export {
+    PlanContainer,
     TrailContainer,
     WeatherContainer
 };

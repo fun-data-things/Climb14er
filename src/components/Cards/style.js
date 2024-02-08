@@ -23,8 +23,8 @@ const PrecipContainer = {
 }
 
 const CardTitle = {
-    padding: '8px',
-    fontWeight: '600'
+    padding: '4px',
+    fontWeight: '600',
 };
 
 const CardDetails = {

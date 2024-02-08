@@ -2,23 +2,50 @@ import { Line, Bar } from "react-chartjs-2";
 import Chart from 'chart.js/auto';
 import * as S from './style';
 
-const TrailCard = ({ name, description, difficulty, elevation, distance }) => {
+
+const TrailCard = ({ 
+        name, 
+        route, 
+        range, 
+        difficulty_class, 
+        mileage, 
+        elevation, 
+        trailhead, 
+        google_maps, 
+        description, 
+        distance_to_denver, 
+        kind_of_trip, 
+        trip_description, 
+        next_summit_route, 
+        notes 
+    }) => {
     return (
         <div style={S.CardContainer}>
-            <div style={S.CardTitle}>{ name }</div>
-            <div style={S.CardDetails}>{ description }</div>
+            <div style={S.CardTitle}><h3>{ name }</h3></div>
             <div style={S.CardDetails}>
-                <span style={S.CardLabel}>Difficulty Level: </span>
-                { difficulty }/5
+                <span style={S.CardLabel}>Route: </span>
+                { route }
+            </div>
+            <div style={S.CardDetails}>
+                <span style={S.CardLabel}>Range: </span>
+                { range }
+            </div>
+            <div style={S.CardDetails}>
+            <span style={S.CardLabel}>Trailhead: </span>
+                <a href={google_maps}>{trailhead}</a></div>
+            <div style={S.CardDetails}>
+                <span style={S.CardLabel}>Class: </span>
+                { difficulty_class }/5
+            </div>
+            <div style={S.CardDetails}>
+                <span style={S.CardLabel}>Mileage: </span>
+                { mileage } miles
             </div>
             <div style={S.CardDetails}>
                 <span style={S.CardLabel}>Elevation Gain: </span>
                 { elevation } ft.
             </div>
-            <div style={S.CardDetails}>
-                <span style={S.CardLabel}>Distance: </span>
-                { distance } miles
-            </div>
+            
         </div>
     )
 };
