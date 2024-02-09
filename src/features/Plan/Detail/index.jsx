@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation} from 'react-router-dom';
-import {TrailCard, TemperatureCard, PrecipitationCard} from '../../../components/Cards';
+import TrailCard from '../../../components/Cards/TrailCard';
+import TemperatureCard from '../../../components/Cards/TemperatureCard';
+import PrecipitationCard from '../../../components/Cards/PrecipitationCard';
+import Chart from 'chart.js/auto'; // This is required - it is not called directly, but chartJS will fail without it
 import * as S from './style';
 
 const PlanDetail = () => {
@@ -21,24 +24,35 @@ const PlanDetail = () => {
     }, [planId])
 
     return (
-        <div style={S.PlanContainer}>
-            <div>
+        <div>
+            <div style={S.DetailContainer}>
                 { planId && plan?.plan ? (
                     <TrailCard
                         key={plan.trail.id}
                         name={plan.trail.name} 
-                        description={plan.trail.description} 
-                        difficulty={plan.trail.difficulty_rating} 
+                        route={plan.trail.route}
+                        range={plan.trail.range}
+                        difficulty_class={plan.trail.difficulty_class} 
+                        mileage={plan.trail.mileage}
                         elevation={plan.trail.elevation_gain}
-                        distance={plan.trail.miles}
+                        trailhead={plan.trail.trailhead}
+                        google_maps={plan.trail.google_maps}
+                        description={plan.trail.description} 
+                        distance_to_denver={plan.trail.distance_to_denver}
+                        kind_of_trip={plan.trail.kind_of_trip}
+                        trip_description={plan.trail.trip_description}
+                        next_summit_route={plan.trail.next_summit_route}
+                        notes={plan.trail.notes}
+                        latitude={plan.trail.latitude}
+                        longitude={plan.trail.longitude}
                     />
                     ) : (
                         <div>Loading plan...</div>
                     )
                 }
             </div>
-            <div>
-            { planId && plan?.plan ? (
+            <div style={S.TemperatureContainer}>
+                {planId && plan?.plan ? (
                     <TemperatureCard
                         key={plan.forecast.id}
                         timestamps={plan.forecast.timestamps}
