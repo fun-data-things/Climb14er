@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation} from 'react-router-dom';
-import {TrailCard, TemperatureCard} from '../../../components/Cards';
+import {TrailCard, TemperatureCard, PrecipitationCard} from '../../../components/Cards';
 import * as S from './style';
 
 const PlanDetail = () => {
@@ -21,7 +21,7 @@ const PlanDetail = () => {
     }, [planId])
 
     return (
-        <div>
+        <div style={S.PlanContainer}>
             <div>
                 { planId && plan?.plan ? (
                     <TrailCard
@@ -43,6 +43,18 @@ const PlanDetail = () => {
                         key={plan.forecast.id}
                         timestamps={plan.forecast.timestamps}
                         temperature={plan.forecast.temp_12hr}
+                    />
+                    ) : (
+                        <div>Loading plan...</div>
+                    )
+                }
+            </div>
+            <div>
+            { planId && plan?.plan ? (
+                    <PrecipitationCard
+                        key={plan.forecast.id}
+                        timestamps={plan.forecast.timestamps}
+                        temperature={plan.forecast.precip_probability_12hr}
                     />
                     ) : (
                         <div>Loading plan...</div>

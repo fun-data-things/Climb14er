@@ -17,10 +17,19 @@ const Explore = () => {
           <TrailCard
             key={trail.id}
             name={trail.name} 
-            description={trail.description} 
-            difficulty={trail.difficulty_rating} 
+            route={trail.route}
+            range={trail.range}
+            difficulty_class={trail.difficulty_class} 
+            mileage={trail.mileage}
             elevation={trail.elevation_gain}
-            distance={trail.miles}
+            trailhead={trail.trailhead}
+            google_maps={trail.google_maps}
+            description={trail.description} 
+            distance_to_denver={trail.distance_to_denver}
+            kind_of_trip={trail.kind_of_trip}
+            trip_description={trail.trip_description}
+            next_summit_route={trail.next_summit_route}
+            notes={trail.notes}
           />
         ))}
       </div>
