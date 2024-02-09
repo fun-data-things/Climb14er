@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Dropdown from '../../../components/Dropdown';
 import Calendar from '../../../components/Calendar';
 import * as S from './style';
@@ -28,7 +28,6 @@ const Plan = () => {
   }, [trailNames.length]);
    
   useEffect(() => {
-    console.log('changes!', selectedTrailName, selectedDate, selectedTime, selectedAmPm)
       if (selectedTrailName && selectedDate && selectedTime && selectedAmPm) {
         setFormDisabled(false);
       } else {
@@ -37,8 +36,6 @@ const Plan = () => {
   }, [selectedTrailName, selectedDate, selectedTime, selectedAmPm]);
 
   const handleCreatePlan = () => {
-
-    console.log('handling plan', selectedTrailName, selectedDate, selectedTime, selectedAmPm)
       if (!formDisabled) {
         const payload = {
           'trail': selectedTrailName,
@@ -54,29 +51,27 @@ const Plan = () => {
         };
         fetch('/plan', requestOptions)
           .then(response => response.json())
-          .then(data => {
-            // console.log(data);
-            navigate(`/plan/${data}`, {state: {id: data}});
-          })
+          .then(data => navigate(`/plan/${data}`, {state: {id: data}}))
           .catch(error => console.error('Error:', error));
       }
   };
 
   return (
       <div style={S.FormContainer}>
+          <div style={S.FormTitle}>Let's plan your trip</div>
           <div style={S.FormItem}>
-              <div>Select your route:</div>
+              <div style={S.FormLabel}>Select your route:</div>
               <Dropdown 
                     dropdownItems={trailNames}
                     handleDropdownSelection={(option) => setSelectedTrailName(option)}
               />
           </div>
-              <div>When do you plan to hike?</div>
           <div style={S.FormItem}>
+              <div style={S.FormLabel}>When do you plan to hike?</div>
               <Calendar selectedDate={selectedDate} onChange={(date) => setSelectedDate(date)} />
           </div>
           <div style={S.FormItem}>
-              <div>What time will you start your hike?</div>
+              <div style={S.FormLabel}>What time will you start your hike?</div>
               <Dropdown
                   dropdownItems={timeRange}
                   handleDropdownSelection={(time) => setSelectedTime(time)}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TrailCard } from '../../components/Cards';
+import TrailCard from '../../components/Cards/TrailCard';
 import * as S from './style';
 
 const Explore = () => {
@@ -30,6 +30,8 @@ const Explore = () => {
             trip_description={trail.trip_description}
             next_summit_route={trail.next_summit_route}
             notes={trail.notes}
+            latitude={trail.latitude}
+            longitude={trail.longitude}
           />
         ))}
       </div>
