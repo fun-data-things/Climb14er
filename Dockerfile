@@ -1,27 +1,32 @@
-# For more information, please refer to https://aka.ms/vscode-docker-python
+# Build step #1: build the React front end
+FROM node:16-alpine as build-step
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json package-lock.json ./
+COPY ./src ./src
+COPY ./public ./public
+RUN npm install
+RUN npm run build
+
+# Build step #2: build the Flask back end
 FROM python:3.11-slim
-
-# Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
-
-# Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
-# Install pip requirements
-COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-
 # Copy the Flask app into the container
-WORKDIR /api
-COPY . /api
+WORKDIR /app
+COPY --from=build-step /app/build ./build
+# COPY api/. /api
 
-# Set the environment variable for Flask
+RUN mkdir ./api
+COPY api/ ./api/
+RUN pip install -r ./api/requirements.txt
+ENV FLASK_ENV production
 ENV FLASK_APP=main.py
 
-EXPOSE 8080
+EXPOSE 3000
 
-# During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-# CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+WORKDIR /app/api
 
 # Start the application
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--timeout", "360", "main:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:3000", "--timeout", "360", "main:app"]
