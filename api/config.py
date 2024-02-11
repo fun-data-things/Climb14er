@@ -51,4 +51,4 @@ class Config:
     # SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://"
     # SQLALCHEMY_ENGINE_OPTIONS = {"creator": getconn}
     # SQLALCHEMY_DATABASE_URI = db_connection_string()
-    # SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
