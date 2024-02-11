@@ -50,5 +50,5 @@ def db_connection_string():
 class Config:
     # SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://"
     # SQLALCHEMY_ENGINE_OPTIONS = {"creator": getconn}
-    SQLALCHEMY_DATABASE_URI = db_connection_string()
+    # SQLALCHEMY_DATABASE_URI = db_connection_string()
     SQLALCHEMY_TRACK_MODIFICATIONS = False
