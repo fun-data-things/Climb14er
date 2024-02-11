@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 
-from config import Config
+# from config import Config
 # from app.database import db
 # from app.models.explore import Trail
 # from app.models.plan import Plan
