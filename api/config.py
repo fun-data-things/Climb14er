@@ -1,6 +1,7 @@
 import os
 # from google.cloud.sql.connector import Connector, IPTypes
 import sqlalchemy
+import sys
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -43,6 +44,7 @@ def db_connection_string():
                 database=db_name,
                 query={"unix_sock": f"{unix_socket_path}/.s.PGSQL.{db_port}"},
             )
+        print(db_url, file=sys.stderr)
         return db_url
 
 class Config:
