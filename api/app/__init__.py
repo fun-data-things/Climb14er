@@ -3,20 +3,20 @@ import logging
 import os
 import sys
 
-from config import Config
-from app.database import db
-from app.models.explore import Trail
-from app.models.plan import Plan
+# from config import Config
+# from app.database import db
+# from app.models.explore import Trail
+# from app.models.plan import Plan
 from app.utils import csv_to_dict
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 app=Flask(__name__,static_folder='static')
-app.config.from_object(Config)
-app.app_context().push()
+# app.config.from_object(Config)
+# app.app_context().push()
 
-db.init_app(app)
-db.create_all()
+# db.init_app(app)
+# db.create_all()
 
 # # For Development Only - insert dummy data from JSON into Sqlite DB
 # csv_file_path = os.path.join(APP_ROOT, 'static', 'colorado_14ers_data.csv')
