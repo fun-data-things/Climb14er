@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 import logging
 import os
 import sys
@@ -14,6 +15,9 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 app=Flask(__name__,static_folder='static')
 app.config.from_object(Config)
 app.app_context().push()
+
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 db.init_app(app)
 db.create_all()

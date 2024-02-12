@@ -1,4 +1,6 @@
 from flask import jsonify, request
+from flask_cors import CORS
+import json
 from datetime import datetime
 import pytz
 import sys
@@ -7,7 +9,7 @@ from app import app, APP_ROOT
 from app.database import db
 from app.models.explore import Trail
 from app.models.plan import Plan, Forecast
-from app.utils import form_tz_aware_timestamp
+from app.utils import form_tz_aware_timestamp, build_cors_preflight_response
 
 
 @app.route('/')
@@ -17,12 +19,16 @@ def home():
 @app.route('/explore')
 def explore():
     trails = [trail.to_dict() for trail in Trail.query.all()]
-    print(trails[0:2], file=sys.stderr)
-    return jsonify(trails)
+    resp = jsonify(trails)
+
+    return resp
 
 # TODO: Need to re-factor this route to work with the React app
-@app.route('/plan', methods=['GET', 'POST'])
+@app.route('/plan', methods=['GET', 'POST', 'OPTIONS'])
 def plan():
+    if request.method == 'OPTIONS':
+        return build_cors_preflight_response()
+    
     if request.method == 'POST':
         data = request.json
         
@@ -50,12 +56,16 @@ def plan():
 
         plan_id = str(plan.id)
 
-        return plan_id
-    
-    # GET trail names for dropdown selection
-    trail_names = [trail.name for trail in Trail.query.all()]
+        resp = jsonify(plan_id)
 
-    return jsonify(trail_names)
+        return resp
+    
+    if request.method == 'GET':
+        # GET trail names for dropdown selection
+        trail_names = [trail.name for trail in Trail.query.all()]
+        resp = jsonify(trail_names)
+
+        return resp
 
 
 @app.route('/plan/<int:id>', methods=['GET']) 
@@ -64,6 +74,8 @@ def plan_detail(id):
     trail = db.get_or_404(Trail, plan.trail_id)
     forecast = db.get_or_404(Forecast, plan.forecast_id)
 
-    response = {"plan": plan.to_dict(), "trail": trail.to_dict(), "forecast": forecast.to_dict()}
+    payload = {"plan": plan.to_dict(), "trail": trail.to_dict(), "forecast": forecast.to_dict()}\
     
-    return response
+    resp = jsonify(payload)
+    
+    return resp

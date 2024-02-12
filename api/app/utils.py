@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+from flask import make_response
 import pytz
 
 
@@ -21,3 +22,11 @@ def csv_to_dict(csv_file_path):
         for row in csv_reader:
             data.append(row)
     return data
+
+
+def build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    return response

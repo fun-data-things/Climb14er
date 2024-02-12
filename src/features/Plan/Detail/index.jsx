@@ -19,7 +19,7 @@ const PlanDetail = () => {
 
     useEffect(() => {
         if (planId) {
-            fetch(`/plan/${planId}`).then(res => res.json()).then(data => setPlan(data));
+            fetch(`${process.env.REACT_APP_API_URL}/plan/${planId}`).then(res => res.json()).then(data => setPlan(data));
         }
     }, [planId])
 
