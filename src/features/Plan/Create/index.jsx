@@ -17,7 +17,7 @@ const Plan = () => {
 
   useEffect(() => {
       if (!trailNames.length) {
-          fetch('/plan').then(res =>res.json()).then(data => setTrailNames(data));
+          fetch(`${process.env.REACT_APP_API_URL}/plan`).then(res =>res.json()).then(data => setTrailNames(data));
       }
   }, []);
 
@@ -43,13 +43,13 @@ const Plan = () => {
           'time': selectedTime,
           'ampm': selectedAmPm
         }
-        console.log('Payload: ', payload)
         const requestOptions = {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          mode: 'cors',
+          headers: { 'Content-Type': 'application/json' , 'Access-Control-Allow-Origin': '*'},
           body: JSON.stringify(payload)
         };
-        fetch('/plan', requestOptions)
+        fetch(`${process.env.REACT_APP_API_URL}/plan`, requestOptions)
           .then(response => response.json())
           .then(data => navigate(`/plan/${data}`, {state: {id: data}}))
           .catch(error => console.error('Error:', error));

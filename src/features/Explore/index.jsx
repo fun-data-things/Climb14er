@@ -7,7 +7,8 @@ const Explore = () => {
 
     useEffect(() => {
         if (!trails.length) {
-          fetch('/explore').then(res =>res.json()).then(data => setTrails(data));
+          console.log(process.env.REACT_APP_API_URL)
+          fetch(`${process.env.REACT_APP_API_URL}/explore`).then(res =>res.json()).then(data => setTrails(data));
         }
     }, []);
 
