@@ -14,8 +14,8 @@ const TemperatureCard = ({ temperature, timestamps }) => {
                             data: temperature,
                             fill: false,
                             borderWidth:4,
-                            backgroundColor: "rgb(255, 99, 132)",
-                            borderColor:'green',
+                            backgroundColor: "#FFB93F",
+                            borderColor:'#FFB93F',
                             responsive:false
                         },
                     ],

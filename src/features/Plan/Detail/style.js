@@ -24,7 +24,15 @@ const WeatherContainer = {
 
 const DetailContainer = {
     display: 'inline-block',
-    margin: '34px'
+    margin: '34px',
+    textAlign: '-webkit-center',
+    width: '100%'
+};
+
+const ChartContainer = {
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: '48px'
 };
 
 const TemperatureContainer = {
@@ -40,5 +48,6 @@ export {
     TrailContainer,
     WeatherContainer,
     DetailContainer,
-    TemperatureContainer
+    TemperatureContainer,
+    ChartContainer
 };

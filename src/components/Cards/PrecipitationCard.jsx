@@ -2,6 +2,7 @@ import { Bar } from "react-chartjs-2";
 import * as S from './style';
 
 const PrecipitationCard = ({ precipitation, timestamps }) => {
+    console.log("precription", precipitation)
     return (
         <div style={S.PrecipContainer}>
             <div style={S.CardTitle}>Hourly Chance of Precipitation</div>
@@ -13,9 +14,9 @@ const PrecipitationCard = ({ precipitation, timestamps }) => {
                             label: "Chance of Precipitation (%)",
                             data: precipitation,
                             fill: false,
-                            borderWidth:4,
-                            backgroundColor: "rgb(255, 99, 132)",
-                            borderColor:'blue',
+                            borderWidth:2,
+                            backgroundColor: '#5567FE',
+                            borderColor:'#5567FE',
                             responsive:false
                         },
                     ],

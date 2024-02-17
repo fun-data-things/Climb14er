@@ -12,7 +12,7 @@ const  SimpleMap = ({latitude, longitude, name}) => {
   };
 
   return (
-    <div style={{ height: '300px', width: '100%' }}>
+    <div style={{ height: '300px', width: '300px' }}>
       <GoogleMapReact
             bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
             defaultCenter={defaultProps.center}
