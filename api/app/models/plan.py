@@ -1,8 +1,5 @@
 from datetime import datetime, timedelta
-import json
 import requests
-import pytz
-import sys
 
 from app.database import db
 from app.models.explore import Trail
@@ -30,7 +27,7 @@ class Forecast(db.Model):
     created_at = db.Column(db.DateTime)
     timestamps = db.Column(db.ARRAY(db.DateTime(timezone=True)))
     temp_12hr = db.Column(db.ARRAY(db.Integer))
-    precip_probability_12hr = db.Column(db.ARRAY(db.Integer))
+    precip_probability_12hr = db.Column(db.ARRAY(db.Float))
     wind_speed_12hr = db.Column(db.ARRAY(db.String(10)))
     wind_dir_12hr = db.Column(db.ARRAY(db.String(10)))
     icons = db.Column(db.ARRAY(db.String(100)))
@@ -66,7 +63,7 @@ class Forecast(db.Model):
             if forecast_timstamp_local >= start_time and forecast_timstamp_local <= end_time:
                 timestamp_array.append(forecast_timstamp_local)
                 temperature_array.append(forecast.get('temperature'))
-                precip_array.append(forecast.get('probabilityOfPrecipitation').get('value'))
+                precip_array.append(forecast.get('probabilityOfPrecipitation').get('value')/100)
                 wind_speed_array.append(forecast.get('windSpeed'))
                 wind_dir_array.append(forecast.get('windDirection'))
                 icon_array.append(forecast.get('icon'))

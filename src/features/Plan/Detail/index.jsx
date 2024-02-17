@@ -19,59 +19,50 @@ const PlanDetail = () => {
 
     useEffect(() => {
         if (planId) {
-            fetch(`${process.env.REACT_APP_API_URL}/plan/${planId}`).then(res => res.json()).then(data => setPlan(data));
+            fetch(`${process.env.REACT_APP_API_URL}/plan/${planId}`).then(res => res.json()).then(data => {
+                setPlan(data)
+                console.log('plan data', data);
+            });
         }
     }, [planId])
 
     return (
         <div>
             <div style={S.DetailContainer}>
-                { planId && plan?.plan ? (
-                    <TrailCard
-                        key={plan.trail.id}
-                        name={plan.trail.name} 
-                        route={plan.trail.route}
-                        range={plan.trail.range}
-                        difficulty_class={plan.trail.difficulty_class} 
-                        mileage={plan.trail.mileage}
-                        elevation={plan.trail.elevation_gain}
-                        trailhead={plan.trail.trailhead}
-                        google_maps={plan.trail.google_maps}
-                        description={plan.trail.description} 
-                        distance_to_denver={plan.trail.distance_to_denver}
-                        kind_of_trip={plan.trail.kind_of_trip}
-                        trip_description={plan.trail.trip_description}
-                        next_summit_route={plan.trail.next_summit_route}
-                        notes={plan.trail.notes}
-                        latitude={plan.trail.latitude}
-                        longitude={plan.trail.longitude}
-                    />
-                    ) : (
-                        <div>Loading plan...</div>
-                    )
-                }
-            </div>
-            <div style={S.TemperatureContainer}>
-                {planId && plan?.plan ? (
-                    <TemperatureCard
-                        key={plan.forecast.id}
-                        timestamps={plan.forecast.timestamps}
-                        temperature={plan.forecast.temp_12hr}
-                    />
-                    ) : (
-                        <div>Loading plan...</div>
-                    )
-                }
-            </div>
-            <div>
-            { planId && plan?.plan ? (
-                    <PrecipitationCard
-                        key={plan.forecast.id}
-                        timestamps={plan.forecast.timestamps}
-                        temperature={plan.forecast.precip_probability_12hr}
-                    />
-                    ) : (
-                        <div>Loading plan...</div>
+                { planId && plan?.plan && (
+                    <div>
+                        <TrailCard
+                            key={plan.trail.id}
+                            name={plan.trail.name} 
+                            route={plan.trail.route}
+                            range={plan.trail.range}
+                            difficulty_class={plan.trail.difficulty_class} 
+                            mileage={plan.trail.mileage}
+                            elevation={plan.trail.elevation_gain}
+                            trailhead={plan.trail.trailhead}
+                            google_maps={plan.trail.google_maps}
+                            description={plan.trail.description} 
+                            distance_to_denver={plan.trail.distance_to_denver}
+                            kind_of_trip={plan.trail.kind_of_trip}
+                            trip_description={plan.trail.trip_description}
+                            next_summit_route={plan.trail.next_summit_route}
+                            notes={plan.trail.notes}
+                            latitude={plan.trail.latitude}
+                            longitude={plan.trail.longitude}
+                        />
+                        <div style={S.ChartContainer} class="hi">
+                            <TemperatureCard
+                                key={plan.forecast.id}
+                                timestamps={plan.forecast.timestamps}
+                                temperature={plan.forecast.temp_12hr}
+                            />
+                            <PrecipitationCard
+                                key={plan.forecast.id}
+                                timestamps={plan.forecast.timestamps}
+                                precipitation={plan.forecast.precip_probability_12hr}
+                            />
+                        </div>
+                    </div>
                     )
                 }
             </div>
