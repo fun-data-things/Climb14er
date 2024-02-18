@@ -30,3 +30,9 @@ def build_cors_preflight_response():
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
     return response
+
+
+def average_over_array(arr):
+        total = sum(arr)
+        average = total / len(arr)
+        return average

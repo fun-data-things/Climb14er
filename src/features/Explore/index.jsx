@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import TrailCard from '../../components/Cards/TrailCard';
+import TrailCardExplore from '../../components/Cards/TrailCardExplore';
 import * as S from './style';
 
 const Explore = () => {
@@ -24,7 +24,7 @@ const Explore = () => {
         ) : (
           <div style={S.ExploreContainer}>
             {trails.map((trail) => (
-              <TrailCard
+              <TrailCardExplore
                 key={trail.id}
                 name={trail.name} 
                 route={trail.route}
@@ -33,8 +33,7 @@ const Explore = () => {
                 mileage={trail.mileage}
                 elevation={trail.elevation_gain}
                 trailhead={trail.trailhead}
-                google_maps={trail.google_maps}
-                description={trail.description} 
+                google_maps={trail.google_maps} 
                 distance_to_denver={trail.distance_to_denver}
                 kind_of_trip={trail.kind_of_trip}
                 trip_description={trail.trip_description}
