@@ -1,9 +1,8 @@
-from flask import jsonify, request
-from flask_cors import CORS
-import json
 from datetime import datetime
-import pytz
+from flask import jsonify, request
+import logging
 import sys
+import time
 
 from app import app, APP_ROOT
 from app.database import db
@@ -38,17 +37,29 @@ def plan():
         # Get timestamp for weather data
         start_at = form_tz_aware_timestamp(data['date'], data['time'], 'America/Denver')
         
-        # Fetch weather forecast
-        forecast_id = Forecast.get_forecast(trail.latitude, trail.longitude, start_at)
+        # Create associated Forecast
+        for attempt in range(3):
+            try:
+                forecast = Forecast.get_forecast(trail.latitude, trail.longitude, start_at)
+                if forecast.id:
+                    break
+            except Exception as e:
+                logging.warn(f"weather api error attempt: {attempt + 1}. ", e)
 
         # Confirm record created
-        print(f"forecast_id = {forecast_id}", file=sys.stderr)
+        print(f"forecast_id = {forecast.id}", file=sys.stderr)
+
+        # Calculate Risk Score
+        risk_score, risk_label, risk_profile = Plan.calculate_risk_score(trail, forecast)
+        print(f"risk profile: {risk_profile}")
 
         plan = Plan(
             created_at = datetime.now(),
             start_at = start_at,
             trail_id = trail.id,
-            forecast_id = forecast_id
+            forecast_id = forecast.id,
+            risk_score = risk_score,
+            risk_label = risk_label
         )
 
         db.session.add(plan)

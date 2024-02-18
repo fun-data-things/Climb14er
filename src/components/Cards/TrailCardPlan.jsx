@@ -1,7 +1,7 @@
-import SimpleMap from "./SimpleMap";
+import MapComponent from "./MapWithMarker"
 import * as S from './style';
 
-const TrailCard = ({ 
+const TrailCardPlan = ({ 
         name, 
         route, 
         range, 
@@ -10,17 +10,15 @@ const TrailCard = ({
         elevation, 
         trailhead, 
         google_maps, 
-        description, 
         distance_to_denver, 
         kind_of_trip, 
         trip_description, 
-        next_summit_route, 
         notes,
         latitude,
         longitude
     }) => {
     return (
-        <div style={S.CardContainer}>
+        <div style={S.PlanTrailContainer}>
             <div>
                 <div style={S.CardTitle}><h3>{ name }</h3></div>
                 <div style={S.CardDetails}>
@@ -46,14 +44,28 @@ const TrailCard = ({
                     <span style={S.CardLabel}>Elevation Gain: </span>
                     { elevation } ft.
                 </div>
+                <div style={S.CardDetails}>
+                    <span style={S.CardLabel}>Kind of Trip: </span>
+                    { kind_of_trip }
+                </div>
+                <div style={S.CardDetails}>
+                    <span style={S.CardLabel}>Distance from Denver: </span>
+                    { distance_to_denver } miles
+                </div>
+                <div style={S.CardDetails}>
+                    <span style={S.CardLabel}>Notes: </span>
+                    { notes }
+                </div>
             </div>
-            <SimpleMap 
-                latitude={latitude} 
-                longitude={longitude} 
-                name={name}
-            />
+            <div>
+                <MapComponent 
+                    latitude={latitude} 
+                    longitude={longitude} 
+                    style={S.MapContainerStylePlan}
+                />
+            </div>
         </div>
     )
 };
 
-export default TrailCard;
+export default TrailCardPlan;

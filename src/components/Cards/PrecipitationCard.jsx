@@ -32,8 +32,11 @@ const PrecipitationCard = ({ precipitation, timestamps }) => {
                             ticks: {
                                 format: {
                                     style: 'percent'
-                                }
-                            }
+                                },
+                                stepSize: 0.25,
+                            },
+                            min: 0,
+                            max: 1,
                         }
                     }
                 }}

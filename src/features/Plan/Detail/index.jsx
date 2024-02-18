@@ -1,10 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useLocation} from 'react-router-dom';
-import TrailCard from '../../../components/Cards/TrailCard';
+import TrailCardPlan from '../../../components/Cards/TrailCardPlan';
 import TemperatureCard from '../../../components/Cards/TemperatureCard';
 import PrecipitationCard from '../../../components/Cards/PrecipitationCard';
+import RiskCard from '../../../components/Cards/RiskCard';
 import Chart from 'chart.js/auto'; // This is required - it is not called directly, but chartJS will fail without it
 import * as S from './style';
+import moment from 'moment-timezone';
+
+function convertTimeStampsToMountainTime(timeStamps) {
+    const mountainTimeStamps = timeStamps.map(timestamp => {
+      const date = moment.utc(timestamp, 'ddd, DD MMM YYYY HH:mm:ss [GMT]').tz('America/Denver');
+      return date.format('h:mm A');
+    });
+    return mountainTimeStamps;
+  }
 
 const PlanDetail = () => {
     const [planId, setPlanId] = useState('');
@@ -27,11 +37,11 @@ const PlanDetail = () => {
     }, [planId])
 
     return (
-        <div>
-            <div style={S.DetailContainer}>
+        <div style={S.PlanContainerParent}>
+            <div style={S.LeftPlanContainer}>
                 { planId && plan?.plan && (
-                    <div>
-                        <TrailCard
+                    <div style={S.TrailDetailContainer}>
+                        <TrailCardPlan
                             key={plan.trail.id}
                             name={plan.trail.name} 
                             route={plan.trail.route}
@@ -41,24 +51,35 @@ const PlanDetail = () => {
                             elevation={plan.trail.elevation_gain}
                             trailhead={plan.trail.trailhead}
                             google_maps={plan.trail.google_maps}
-                            description={plan.trail.description} 
                             distance_to_denver={plan.trail.distance_to_denver}
                             kind_of_trip={plan.trail.kind_of_trip}
-                            trip_description={plan.trail.trip_description}
                             next_summit_route={plan.trail.next_summit_route}
                             notes={plan.trail.notes}
                             latitude={plan.trail.latitude}
                             longitude={plan.trail.longitude}
                         />
-                        <div style={S.ChartContainer} class="hi">
+                        <div style={S.RiskContainer}>
+                            <RiskCard
+                                riskLabel={plan.plan.risk_label}
+                            />
+                        </div>
+                    </div>
+                )
+            }
+            <div style={S.RightPlanContainer}>
+                { planId && plan?.plan && (
+                    <div>
+                        <div style={S.ChartContainer}>
                             <TemperatureCard
                                 key={plan.forecast.id}
-                                timestamps={plan.forecast.timestamps}
+                                timestamps={convertTimeStampsToMountainTime(plan.forecast.timestamps)}
                                 temperature={plan.forecast.temp_12hr}
                             />
+                        </div>
+                        <div style={S.ChartContainer}>
                             <PrecipitationCard
                                 key={plan.forecast.id}
-                                timestamps={plan.forecast.timestamps}
+                                timestamps={convertTimeStampsToMountainTime(plan.forecast.timestamps)}
                                 precipitation={plan.forecast.precip_probability_12hr}
                             />
                         </div>
@@ -67,6 +88,7 @@ const PlanDetail = () => {
                 }
             </div>
         </div>
+    </div>
     )
 }
 

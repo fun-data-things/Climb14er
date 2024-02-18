@@ -1,53 +1,45 @@
-const PlanContainer = {
+const PlanContainerParent = {
     padding: '12px',
     textAlign: 'center',
     display: 'inline-block'
 };
 
-const TrailContainer = {
+const LeftPlanContainer = {
     display: 'flex',
     float: 'left',
-    justifyContent: 'space-between',
-    padding: '24px',
-    flexWrap: 'wrap',
-    flexBasis: '33.333333%'
+    justifyContent:'center',
+    padding: '12px',
 };
 
-const WeatherContainer = {
+const RightPlanContainer = {
     display: 'flex',
     float: 'left',
-    justifyContent: 'space-between',
-    padding: '24px',
-    flexWrap: 'wrap',
-    flexBasis: '33.333333%'
+    justifyContent:'center',
+    padding: '12px',
 };
 
-const DetailContainer = {
+const TrailDetailContainer = {
     display: 'inline-block',
-    margin: '34px',
+    margin: '12px',
     textAlign: '-webkit-center',
     width: '100%'
 };
 
 const ChartContainer = {
-    display: 'flex',
+    display: 'inline-block',
     justifyContent: 'space-around',
-    marginTop: '48px'
+    margin: '8px'
 };
 
-const TemperatureContainer = {
-    minWidth: '500px',
-    minHeight: '500px',
-    maxWidth: '700px',
-    maxHeight: '700px',
-    margin: '12px'
+const RiskContainer = {
+    display: 'block'
 };
 
 export {
-    PlanContainer,
-    TrailContainer,
-    WeatherContainer,
-    DetailContainer,
-    TemperatureContainer,
-    ChartContainer
+    PlanContainerParent,
+    LeftPlanContainer,
+    RightPlanContainer,
+    TrailDetailContainer,
+    ChartContainer,
+    RiskContainer
 };

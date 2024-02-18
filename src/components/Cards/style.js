@@ -1,4 +1,4 @@
-const CardContainer = {
+const ExploreTrailContainer = {
     border: '1px solid black',
     borderRadius: '6px',
     width: '500px',
@@ -8,6 +8,27 @@ const CardContainer = {
     display: 'flex',
     justifyContent: 'space-around'
 };
+
+const PlanTrailContainer = {
+    border: '1px solid black',
+    borderRadius: '6px',
+    width: '650px',
+    padding: '16px',
+    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
+    margin: '18px',
+    display: 'flex',
+    justifyContent: 'space-around'
+};
+
+const MapContainerStyleExplore = {
+    width: '250px',
+    height: '300px'
+};
+
+const MapContainerStylePlan = {
+    width: '300px',
+    height: '450px'
+  };
 
 const TemperatureContainer = {
     border: '1px solid black',
@@ -25,6 +46,20 @@ const PrecipContainer = {
     boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px'
 }
 
+const RiskContainer = {
+    border: '1px solid black',
+    borderRadius: '6px',
+    width: '650px',
+    padding: '12px',
+    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px'
+};
+
+const RiskTitle = {
+    display: 'block',
+    fontSize: '30px',
+    color: 'orange'
+};
+
 const CardTitle = {
     fontWeight: '600',
     fontSize: '22px'
@@ -40,10 +75,15 @@ const CardLabel = {
 };
 
 export {
-    CardContainer,
+    ExploreTrailContainer,
+    PlanTrailContainer,
+    MapContainerStyleExplore,
+    MapContainerStylePlan,
     CardTitle,
     CardDetails,
     CardLabel,
     TemperatureContainer,
-    PrecipContainer
+    PrecipContainer,
+    RiskContainer,
+    RiskTitle
 };

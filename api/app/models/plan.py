@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
 import requests
+import time
 
 from app.database import db
 from app.models.explore import Trail
+from app.utils import average_over_array
 
 class Plan(db.Model):
     __tablename__ = "plan"
@@ -12,12 +14,57 @@ class Plan(db.Model):
     start_at = db.Column(db.DateTime)
     trail_id = db.Column(db.Integer, db.ForeignKey(Trail.id))
     forecast_id = db.Column(db.Integer, db.ForeignKey('forecast.id'))
+    risk_score = db.Column(db.Integer)
+    risk_label = db.Column(db.String(100))
+
+    forecast = db.relationship("Forecast", foreign_keys=[forecast_id], backref="plan", uselist=False)
 
     def __repr__(self):
         return f'<Plan "{self.id}">'
-    
+
+
     def to_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+    def calculate_risk_score(trail, forecast):
+        avg_temp = average_over_array(forecast.temp_12hr)
+        avg_precip = average_over_array(forecast.precip_probability_12hr)
+        avg_wind_speed = average_over_array([int(speed.split()[0]) for speed in forecast.wind_speed_12hr])
+
+        temperature_factor = abs(65 - avg_temp)
+        precip_factor = (avg_precip*25)
+        trail_difficult_factor = trail.difficulty_class * 20
+        snow_factor = 0
+        for i in forecast.short_forecast_12hr:
+            if "snow" in i.lower():
+                snow_factor = 20
+        wind_factor = avg_wind_speed * 0.5
+        
+
+        risk_score = temperature_factor + precip_factor + trail_difficult_factor + snow_factor + wind_factor
+
+        risk_label = None
+        if risk_score < 50:
+            risk_label = 'Low'
+        if risk_score >= 50 and risk_score < 100:
+            risk_label = 'Medium'
+        if risk_score >= 100 and risk_score < 150:
+            risk_label = 'High'
+        if risk_score >= 150:
+            risk_label = 'Extreme'
+
+        risk_profile = {
+            "risk_label": risk_label,
+            "risk score": risk_score, 
+            "temp factor": temperature_factor, 
+            "precip factor": precip_factor,
+            "trail difficulty factor": trail_difficult_factor,
+            "snow factor": snow_factor,
+            "wind factor": wind_factor
+        }
+        
+        return risk_score, risk_label, risk_profile
 
 
 class Forecast(db.Model):
@@ -42,11 +89,15 @@ class Forecast(db.Model):
     def get_forecast(latitude, longitude, start_time):
         end_time = start_time + timedelta(hours=12)
         
-        point_response = requests.get(f'https://api.weather.gov/points/{latitude},{longitude}').json()
-
-        forecast_response = requests.get(point_response['properties']['forecastHourly']).json()
-
-        generated_at = datetime.strptime(forecast_response['properties']['generatedAt'], '%Y-%m-%dT%H:%M:%S%z')
+        for attempt in range(3):
+            try:
+                point_response = requests.get(f'https://api.weather.gov/points/{latitude},{longitude}').json()
+                forecast_response = requests.get(point_response['properties']['forecastHourly']).json()
+                generated_at = datetime.strptime(forecast_response['properties']['generatedAt'], '%Y-%m-%dT%H:%M:%S%z')
+                break
+            except Exception as e:
+                print(f"Error making weather API requests. Attempt number={attempt+1}")
+                time.sleep(1)
 
         hourly_data = forecast_response['properties']['periods']
 
@@ -60,7 +111,7 @@ class Forecast(db.Model):
         for forecast in hourly_data:
             forecast_timstamp_local = datetime.strptime(forecast['startTime'], '%Y-%m-%dT%H:%M:%S%z')
 
-            if forecast_timstamp_local >= start_time and forecast_timstamp_local <= end_time:
+            if forecast_timstamp_local >= start_time and forecast_timstamp_local < end_time:
                 timestamp_array.append(forecast_timstamp_local)
                 temperature_array.append(forecast.get('temperature'))
                 precip_array.append(forecast.get('probabilityOfPrecipitation').get('value')/100)
@@ -83,6 +134,4 @@ class Forecast(db.Model):
         db.session.add(forecast)
         db.session.commit()
 
-        forecast_id = forecast.id
-
-        return forecast_id
+        return forecast
