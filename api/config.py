@@ -2,9 +2,9 @@ import os
 from google.cloud.sql.connector import Connector, IPTypes
 import sqlalchemy
 import sys
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -27,9 +27,7 @@ def getconn():
         return conn
 
 class Config:
-    if os.environ.get('DEV_DB_URI'):
-        SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DB_URI')
-    else:
-        SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://"
-        SQLALCHEMY_ENGINE_OPTIONS = {"creator": getconn}
+    # SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DB_URI')
+    SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://"
+    SQLALCHEMY_ENGINE_OPTIONS = {"creator": getconn}
     SQLALCHEMY_TRACK_MODIFICATIONS = False
