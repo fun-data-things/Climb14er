@@ -37,8 +37,8 @@ const PlanDetail = () => {
     }, [planId])
 
     return (
-        <div style={S.PlanContainerParent}>
-            <div style={S.LeftPlanContainer}>
+        <div style={S.PlanContainerParent} class="plan-parent-container">
+            <div style={S.LeftPlanContainer} class="left-plan-container">
                 { planId && plan?.plan && (
                     <div style={S.TrailDetailContainer}>
                         <TrailCardPlan
@@ -66,7 +66,7 @@ const PlanDetail = () => {
                     </div>
                 )
             }
-            <div style={S.RightPlanContainer}>
+            <div style={S.RightPlanContainer} class="right-plan-container">
                 { planId && plan?.plan && (
                     <div>
                         <div style={S.ChartContainer}>
