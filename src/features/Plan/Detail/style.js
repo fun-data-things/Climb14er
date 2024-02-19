@@ -1,26 +1,28 @@
 const PlanContainerParent = {
     padding: '12px',
     textAlign: 'center',
-    display: 'inline-block'
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%'
 };
 
 const LeftPlanContainer = {
     display: 'flex',
     float: 'left',
     justifyContent:'center',
-    padding: '12px',
+    padding: '12px'
 };
 
 const RightPlanContainer = {
     display: 'flex',
     float: 'left',
     justifyContent:'center',
-    padding: '12px',
+    padding: '12px'
 };
 
 const TrailDetailContainer = {
     display: 'inline-block',
-    margin: '12px',
     textAlign: '-webkit-center',
     width: '100%'
 };

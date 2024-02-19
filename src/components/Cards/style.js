@@ -12,10 +12,11 @@ const ExploreTrailContainer = {
 const PlanTrailContainer = {
     border: '1px solid black',
     borderRadius: '6px',
-    width: '650px',
-    padding: '16px',
+    width: '95%',
+    padding: '12px',
     boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
-    margin: '18px',
+    marginTop: '12px',
+    marginBottom: '12px',
     display: 'flex',
     justifyContent: 'space-around'
 };
@@ -33,7 +34,7 @@ const MapContainerStylePlan = {
 const TemperatureContainer = {
     border: '1px solid black',
     borderRadius: '6px',
-    width: '500px',
+    width: '95%',
     padding: '12px',
     boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px'
 }
@@ -41,7 +42,7 @@ const TemperatureContainer = {
 const PrecipContainer = {
     border: '1px solid black',
     borderRadius: '6px',
-    width: '500px',
+    width: '95%',
     padding: '12px',
     boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px'
 }
@@ -49,7 +50,7 @@ const PrecipContainer = {
 const RiskContainer = {
     border: '1px solid black',
     borderRadius: '6px',
-    width: '650px',
+    width: '95%',
     padding: '12px',
     boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px'
 };

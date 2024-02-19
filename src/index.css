@@ -24,3 +24,10 @@ button[disabled] {
   background-color: #cccccc !important;
   color: #666666 !important;
 }
+
+@media only screen and (max-width: 715px) {
+  .left-plan-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
