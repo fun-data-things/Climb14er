@@ -14,7 +14,7 @@ class Plan(db.Model):
     start_at = db.Column(db.DateTime)
     trail_id = db.Column(db.Integer, db.ForeignKey(Trail.id))
     forecast_id = db.Column(db.Integer, db.ForeignKey('forecast.id'))
-    risk_score = db.Column(db.Integer)
+    risk_score = db.Column(db.Float)
     risk_label = db.Column(db.String(100))
 
     forecast = db.relationship("Forecast", foreign_keys=[forecast_id], backref="plan", uselist=False)
