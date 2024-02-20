@@ -12,7 +12,7 @@ const TrailCardPlan = ({
         google_maps, 
         distance_to_denver, 
         kind_of_trip, 
-        trip_description, 
+        next_summit_route,
         notes,
         latitude,
         longitude
@@ -30,8 +30,9 @@ const TrailCardPlan = ({
                     { range }
                 </div>
                 <div style={S.CardDetails}>
-                <span style={S.CardLabel}>Trailhead: </span>
-                    <a href={google_maps}>{trailhead}</a></div>
+                    <span style={S.CardLabel}>Trailhead: </span>
+                        <a href={google_maps}>{trailhead}</a>
+                </div>
                 <div style={S.CardDetails}>
                     <span style={S.CardLabel}>Class: </span>
                     { difficulty_class }/5
@@ -55,6 +56,9 @@ const TrailCardPlan = ({
                 <div style={S.CardDetails}>
                     <span style={S.CardLabel}>Notes: </span>
                     { notes }
+                </div>
+                <div style={S.CardDetails}>
+                    <a href={next_summit_route} style={S.CardLabel} target="_blank">More Info</a>
                 </div>
             </div>
             <div>
