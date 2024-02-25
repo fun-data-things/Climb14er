@@ -2,9 +2,9 @@ import os
 from google.cloud.sql.connector import Connector, IPTypes
 import sqlalchemy
 import sys
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
