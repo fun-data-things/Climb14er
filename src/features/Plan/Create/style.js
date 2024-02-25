@@ -35,7 +35,8 @@ const Button = {
     backgroundColor: '#104b0e',
     padding: '12px',
     color: 'white',
-    fontSize: '16px'
+    fontSize: '16px',
+    cursor: 'pointer'
 };
 
 export {

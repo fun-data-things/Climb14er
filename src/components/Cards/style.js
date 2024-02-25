@@ -1,10 +1,13 @@
-const ExploreTrailContainer = {
+const ExploreTrailCard = {
+    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
     border: '1px solid black',
     borderRadius: '6px',
     width: '500px',
     padding: '16px',
-    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
     margin: '18px',
+};
+
+const ExploreTrailContainer = {
     display: 'flex',
     justifyContent: 'space-around'
 };
@@ -61,6 +64,15 @@ const RiskTitle = {
     color: 'orange'
 };
 
+const FormatRiskTitle = (color) => {
+    return {
+        display: 'block',
+        fontSize: '30px',
+        fontWeight: '600',
+        color
+    }
+};
+
 const CardTitle = {
     fontWeight: '600',
     fontSize: '22px'
@@ -75,7 +87,12 @@ const CardLabel = {
     fontWeight: '500'
 };
 
+const ButtonContainer = {
+    margin: '12px'
+};
+
 export {
+    ExploreTrailCard,
     ExploreTrailContainer,
     PlanTrailContainer,
     MapContainerStyleExplore,
@@ -86,5 +103,7 @@ export {
     TemperatureContainer,
     PrecipContainer,
     RiskContainer,
-    RiskTitle
+    RiskTitle,
+    FormatRiskTitle,
+    ButtonContainer
 };
