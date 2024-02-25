@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Dropdown from '../../../components/Dropdown';
 import Calendar from '../../../components/Calendar';
 import * as S from './style';
 
 const Plan = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [trailNames, setTrailNames] = useState([]);
   const [selectedTrailName, setSelectedTrailName] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
@@ -15,28 +16,29 @@ const Plan = () => {
   const timeRange = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const amPm = ['AM', 'PM'];
 
-  useEffect(() => {
-      if (!trailNames.length) {
-          fetch(`${process.env.REACT_APP_API_URL}/plan`).then(res =>res.json()).then(data => setTrailNames(data));
-      }
-  }, []);
+    useEffect(() => {
+        if (!trailNames.length) {
+            fetch(`${process.env.REACT_APP_API_URL}/plan`).then(res =>res.json()).then(data => setTrailNames(data));
+        }
+    }, []);
 
   useEffect(() => {
-      setSelectedTrailName(trailNames[0]);
-      setSelectedTime(timeRange[0]);
-      setSelectedAmPm(amPm[0]);
+        location?.state?.name ? setSelectedTrailName(location.state.name) : setSelectedTrailName(trailNames[0]);
+        setSelectedTime(timeRange[0]);
+        setSelectedAmPm(amPm[0]);
   }, [trailNames.length]);
    
   useEffect(() => {
-      if (selectedTrailName && selectedDate && selectedTime && selectedAmPm) {
-        setFormDisabled(false);
-      } else {
-        setFormDisabled(true);
-      }
+        if (selectedTrailName && selectedDate && selectedTime && selectedAmPm) {
+            setFormDisabled(false);
+        } else {
+            setFormDisabled(true);
+        }
   }, [selectedTrailName, selectedDate, selectedTime, selectedAmPm]);
 
   const handleCreatePlan = () => {
       if (!formDisabled) {
+        setFormDisabled(true);
         const payload = {
           'trail': selectedTrailName,
           'date': selectedDate,
@@ -62,6 +64,7 @@ const Plan = () => {
           <div style={S.FormItem}>
               <div style={S.FormLabel}>Select your route:</div>
               <Dropdown 
+                    value={selectedTrailName}
                     dropdownItems={trailNames}
                     handleDropdownSelection={(option) => setSelectedTrailName(option)}
               />

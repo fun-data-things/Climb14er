@@ -22,7 +22,6 @@ def explore():
 
     return resp
 
-# TODO: Need to re-factor this route to work with the React app
 @app.route('/plan', methods=['GET', 'POST', 'OPTIONS'])
 def plan():
     if request.method == 'OPTIONS':

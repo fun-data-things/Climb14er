@@ -10,7 +10,7 @@ const Calendar = ({ selectedDate, onChange }) => {
    
     return (
         <div>
-            <input type="date" value={selectedDate} min={currentDate.toISOString().split('T')[0]} max={formattedMaxDate} onChange={(e) => onChange(e.target.value)} />
+            <input type="date" defaultValue={'2024-26-02'} value={selectedDate} min={currentDate.toISOString().split('T')[0]} max={formattedMaxDate} onChange={(e) => onChange(e.target.value)} />
         </div>
     );
 };

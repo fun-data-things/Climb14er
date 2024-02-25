@@ -1,6 +1,10 @@
-const Dropdown = ({ dropdownItems, handleDropdownSelection }) => {
+const Dropdown = ({ value, dropdownItems, handleDropdownSelection }) => {
     return (
-        <select name="dropdown" onChange={(e) => handleDropdownSelection(e.target.value)}>
+        <select 
+            value={value}
+            name="dropdown" 
+            onChange={(e) => handleDropdownSelection(e.target.value)}
+        >
             {dropdownItems.map((dropdownItem) => (
             <option
                 key={dropdownItem}

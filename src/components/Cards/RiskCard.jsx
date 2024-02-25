@@ -1,11 +1,29 @@
 import * as S from './style';
 
 const RiskCard = ({ riskLabel }) => {
-    console.log("Risk Score", riskLabel)
+    const riskOptions = { 
+        Low: {
+            label: 'Low',
+            color: 'lightblue'
+        },
+        Medium: {
+            label: 'Medium',
+            color: 'yellow'
+        },
+        High: {
+            label: 'High',
+            color: 'orange'
+        },
+        Extreme: {
+            label: 'Extreme',
+            color: 'red'
+        }
+    };
+
     return (
         <div style={S.RiskContainer}>
             <div style={S.CardTitle}>Risk Score</div>
-            <div style={S.RiskTitle}>{ riskLabel }</div>
+            <div style={S.FormatRiskTitle(riskOptions[riskLabel].color)}>{ riskLabel }</div>
         </div>
     )
 };
