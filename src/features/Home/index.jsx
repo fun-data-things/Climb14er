@@ -8,16 +8,15 @@ function Home() {
             Most Ambitious Adventurers!
         </div>
         <div style={S.HomeImageContainer}>
-            <img src="/images/14er-3.jpg" style={S.HomeImage} />
+            <img src="/images/14er-4.jpg" style={S.HomeImage} />
         </div>
-        
         <div style={S.AboutContainer}>
           <div style={S.HomeHeaderContainer}>
               About
           </div>
           <div style={S.AboutContainerDetail}>
             This app is intended to help you explore the different 14ers and prepare for your trips. 
-            Check out the Explore page to browse the various peaks, and the Plan page when you have a hike in mind.
+            Check out the Explore page to browse the various peaks. The Plan page will help you prepare once you have a hike in mind.
             Plans include details about the route, weather forecasts, and an estimated risk score.
           </div>
           <div style={S.AboutContainerDetail}>
@@ -25,9 +24,12 @@ function Home() {
             Always stay aware of your surroundings, monitor the skies, and don't be afraid to turn back if conditions
             start to turn against you. You can always attempt your summit another day!
           </div>
+          <div style={S.AboutContainerDetail}>
+            For those curious to gather insights about Climb14er users and 14er traffic, navigate to the Analytics tab. 
+          </div>
         </div>
         <div style={S.HomeImageContainer}>
-            <img src="/images/14er-4.jpg" style={S.HomeImage} />
+            <img src="/images/14er-3.jpg" style={S.HomeImage} />
         </div>
         <div style={S.HomeHeaderContainer}>
           Happy Trails!
