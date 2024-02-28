@@ -1,7 +1,7 @@
 const FormContainer = {
     display: 'inline-block',
     border: '1px solid black',
-    width: '600px',
+    width: '80%',
     borderRadius: '3px',
     marginTop: '75px',
     boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
