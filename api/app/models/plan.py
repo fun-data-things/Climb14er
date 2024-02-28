@@ -16,6 +16,8 @@ class Plan(db.Model):
     forecast_id = db.Column(db.Integer, db.ForeignKey('forecast.id'))
     risk_score = db.Column(db.Float)
     risk_label = db.Column(db.String(100))
+    primary_risk_factor = db.Column(db.String(100))
+    risk_explanation = db.Column(db.String(150))
 
     forecast = db.relationship("Forecast", foreign_keys=[forecast_id], backref="plan", uselist=False)
 
@@ -32,14 +34,20 @@ class Plan(db.Model):
         avg_precip = average_over_array(forecast.precip_probability_12hr)
         avg_wind_speed = average_over_array([int(speed.split()[0]) for speed in forecast.wind_speed_12hr])
 
-        temperature_factor = abs(65 - avg_temp)
-        precip_factor = (avg_precip*25)
+        if avg_temp >= 50.0 and avg_temp <= 75.0:
+            temperature_factor = 0
+        elif avg_temp < 50.0:
+            temperature_factor = 50.0 - avg_temp
+        elif avg_temp > 75.0:
+            temperature_factor = avg_temp - 75.0
+
+        precip_factor = (avg_precip * 50)
         trail_difficult_factor = trail.difficulty_class * 20
         snow_factor = 0
         for i in forecast.short_forecast_12hr:
             if "snow" in i.lower():
                 snow_factor = 20
-        wind_factor = avg_wind_speed * 0.5
+        wind_factor = avg_wind_speed
         
 
         risk_score = temperature_factor + precip_factor + trail_difficult_factor + snow_factor + wind_factor
@@ -54,17 +62,27 @@ class Plan(db.Model):
         if risk_score >= 150:
             risk_label = 'Extreme'
 
-        risk_profile = {
-            "risk_label": risk_label,
-            "risk score": risk_score, 
-            "temp factor": temperature_factor, 
-            "precip factor": precip_factor,
-            "trail difficulty factor": trail_difficult_factor,
-            "snow factor": snow_factor,
-            "wind factor": wind_factor
+        risk_factors = {
+            "temp_factor": temperature_factor, 
+            "precip_factor": precip_factor,
+            "trail_factor": trail_difficult_factor,
+            "snow_factor": snow_factor,
+            "wind_factor": wind_factor
         }
+
+        risk_explanation_map = {
+            "temp_factor": "Severe temperatures forecasted", 
+            "precip_factor": "Heavy precipitation forecasted",
+            "trail_factor": "Challenging route selected",
+            "snow_factor": "Snowy conditions expected",
+            "wind_factor": "Severe winds forecasted"
+        }
+
+        primary_risk_factor = max(risk_factors, key=risk_factors.get)
+        risk_explanation = risk_explanation_map.get(primary_risk_factor)
+
         
-        return risk_score, risk_label, risk_profile
+        return risk_score, risk_label, primary_risk_factor, risk_explanation
 
 
 class Forecast(db.Model):

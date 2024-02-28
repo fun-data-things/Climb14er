@@ -49,8 +49,7 @@ def plan():
         print(f"forecast_id = {forecast.id}", file=sys.stderr)
 
         # Calculate Risk Score
-        risk_score, risk_label, risk_profile = Plan.calculate_risk_score(trail, forecast)
-        print(f"risk profile: {risk_profile}")
+        risk_score, risk_label, primary_risk_factor, risk_explanation = Plan.calculate_risk_score(trail, forecast)
 
         plan = Plan(
             created_at = datetime.now(),
@@ -58,7 +57,9 @@ def plan():
             trail_id = trail.id,
             forecast_id = forecast.id,
             risk_score = risk_score,
-            risk_label = risk_label
+            risk_label = risk_label,
+            primary_risk_factor = primary_risk_factor,
+            risk_explanation = risk_explanation
         )
 
         db.session.add(plan)

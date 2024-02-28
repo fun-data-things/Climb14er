@@ -41,6 +41,12 @@ const PlanDetail = () => {
             <div style={S.LeftPlanContainer} class="left-plan-container">
                 { planId && plan?.plan && (
                     <div style={S.TrailDetailContainer}>
+                        <div style={S.RiskContainer}>
+                            <RiskCard
+                                riskLabel={plan.plan.risk_label}
+                                riskExplanation={plan.plan.risk_explanation}
+                            />
+                        </div>
                         <TrailCardPlan
                             key={plan.trail.id}
                             name={plan.trail.name} 
@@ -58,11 +64,6 @@ const PlanDetail = () => {
                             latitude={plan.trail.latitude}
                             longitude={plan.trail.longitude}
                         />
-                        <div style={S.RiskContainer}>
-                            <RiskCard
-                                riskLabel={plan.plan.risk_label}
-                            />
-                        </div>
                     </div>
                 )
             }

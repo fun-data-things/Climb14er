@@ -3,7 +3,8 @@ const NavContainer = {
     justifyContent: 'start', 
     backgroundColor: '#104b0e', 
     color: 'white',
-    height: '45px'
+    height: '45px',
+    width: 'auto'
 };
 
 const NavLink = {

@@ -2,7 +2,7 @@ const ExploreTrailCard = {
     boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
     border: '1px solid black',
     borderRadius: '6px',
-    width: '500px',
+    width: '85%',
     padding: '16px',
     margin: '18px',
 };
@@ -25,8 +25,9 @@ const PlanTrailContainer = {
 };
 
 const MapContainerStyleExplore = {
-    width: '250px',
-    height: '300px'
+    width: '200px',
+    minHeight: '300px',
+    maxHeight: '400px'
 };
 
 const MapContainerStylePlan = {

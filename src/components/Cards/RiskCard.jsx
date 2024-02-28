@@ -1,22 +1,22 @@
 import * as S from './style';
 
-const RiskCard = ({ riskLabel }) => {
+const RiskCard = ({ riskLabel, riskExplanation }) => {
     const riskOptions = { 
         Low: {
             label: 'Low',
-            color: 'lightblue'
+            color: '#3463AC'
         },
         Medium: {
             label: 'Medium',
-            color: 'yellow'
+            color: '#FBBF0D'
         },
         High: {
             label: 'High',
-            color: 'orange'
+            color: '#f28111'
         },
         Extreme: {
             label: 'Extreme',
-            color: 'red'
+            color: '#d11212'
         }
     };
 
@@ -24,6 +24,10 @@ const RiskCard = ({ riskLabel }) => {
         <div style={S.RiskContainer}>
             <div style={S.CardTitle}>Risk Score</div>
             <div style={S.FormatRiskTitle(riskOptions[riskLabel].color)}>{ riskLabel }</div>
+            <div style={S.CardDetails}>
+                <span style={S.CardLabel}>Primary Risk Factor: </span>
+                { riskExplanation }
+            </div>
         </div>
     )
 };

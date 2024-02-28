@@ -7,7 +7,7 @@ const HomeImageContainer = {
 };
 
 const HomeImage = {
-    maxWidth: '800px'
+    maxWidth: '90%'
 };
 
 const HomeHeaderContainer = {
