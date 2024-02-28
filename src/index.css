@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   background-color: '#fbf7f5';
+  width: 'auto';
 }
 
 code {
@@ -25,9 +26,30 @@ button[disabled] {
   color: #666666 !important;
 }
 
+.hamburger {
+  display: none !important;
+}
+
+.navigation {
+  display: flex !important;
+}
+
 @media only screen and (max-width: 715px) {
   .left-plan-container {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+@media (max-width: 700px) {
+  .hamburger {
+      display: flex !important;
+      padding-top: 10px;
+      margin-left: 10px;
+      z-index: 10;
+  }  
+
+  .navigation {
+    display: none !important;
   }
 }
